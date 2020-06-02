@@ -98,6 +98,7 @@ class OrderResourcePlugin extends ResourcePlugin
         }
 
         $this->addDataForResource($resource, 'Shipping_full_name', $shippingAddress->getFirstName().' '.$shippingAddress->getLastName());
+        $this->addDataForResource($resource, 'Shipping_company', $shippingAddress->getCompany());
         $this->addDataForResource($resource, 'Shipping_telephone', $shippingAddress->getPhoneNumber());
         $this->addDataForResource($resource, 'Shipping_street', $shippingAddress->getStreet());
         $this->addDataForResource($resource, 'Shipping_postcode', $shippingAddress->getPostcode());
@@ -117,6 +118,8 @@ class OrderResourcePlugin extends ResourcePlugin
         }
 
         $this->addDataForResource($resource, 'Full_name', $billingAddress->getFirstName().' '.$billingAddress->getLastName());
+        $this->addDataForResource($resource, 'Company', $billingAddress->getCompany());
+        $this->addDataForResource($resource, 'Vat_number', $billingAddress->getVatNumber());
         $this->addDataForResource($resource, 'Telephone', $billingAddress->getPhoneNumber());
         $this->addDataForResource($resource, 'Street', $billingAddress->getStreet());
         $this->addDataForResource($resource, 'Postcode', $billingAddress->getPostcode());
