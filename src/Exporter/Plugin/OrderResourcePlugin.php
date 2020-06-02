@@ -97,16 +97,15 @@ class OrderResourcePlugin extends ResourcePlugin
             return;
         }
 
-//        $shippingInfoString = $this->addressConcatenation->getString($shippingAddress);
+        $this->addDataForResource($resource, 'Shipping_full_name', $shippingAddress->getFirstName().' '.$shippingAddress->getLastName());
+        $this->addDataForResource($resource, 'Shipping_telephone', $shippingAddress->getPhoneNumber());
+        $this->addDataForResource($resource, 'Shipping_street', $shippingAddress->getStreet());
+        $this->addDataForResource($resource, 'Shipping_postcode', $shippingAddress->getPostcode());
+        $this->addDataForResource($resource, 'Shipping_city', $shippingAddress->getCity());
 
-        $this->addDataForResource($resource, 'Full_name', $shippingAddress->getFirstName().' '.$shippingAddress->getLastName());
-        $this->addDataForResource($resource, 'Telephone', $shippingAddress->getPhoneNumber());
-        $this->addDataForResource($resource, 'Street', $shippingAddress->getStreet());
-        $this->addDataForResource($resource, 'Postcode', $shippingAddress->getPostcode());
-        $this->addDataForResource($resource, 'City', $shippingAddress->getCity());
-//        $this->addDataForResource($resource, 'Vatnumber', $shippingAddress->getVatNumber());
+        $shippingInfoString = $this->addressConcatenation->getString($shippingAddress);
 
-//        $this->addDataForResource($resource, 'Shipping_address', $shippingInfoString);
+        $this->addDataForResource($resource, 'Shipping_address', $shippingInfoString);
     }
 
     private function addBillingAddressData(OrderInterface $resource): void
@@ -117,9 +116,15 @@ class OrderResourcePlugin extends ResourcePlugin
             return;
         }
 
-        $billingInfoString = $this->addressConcatenation->getString($billingAddress);
+        $this->addDataForResource($resource, 'Full_name', $billingAddress->getFirstName().' '.$billingAddress->getLastName());
+        $this->addDataForResource($resource, 'Telephone', $billingAddress->getPhoneNumber());
+        $this->addDataForResource($resource, 'Street', $billingAddress->getStreet());
+        $this->addDataForResource($resource, 'Postcode', $billingAddress->getPostcode());
+        $this->addDataForResource($resource, 'City', $billingAddress->getCity());
 
-        $this->addDataForResource($resource, 'Billing_address', $billingInfoString);
+//        $billingInfoString = $this->addressConcatenation->getString($billingAddress);
+
+//        $this->addDataForResource($resource, 'Billing_address', $billingInfoString);
     }
 
     private function getItemsAndCount(OrderInterface $resource): array
