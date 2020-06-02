@@ -83,9 +83,9 @@ class OrderResourcePlugin extends ResourcePlugin
             return;
         }
 
-        $this->addDataForResource($resource, 'Gender', $customer->getGender());
-        $this->addDataForResource($resource, 'Full_name', $customer->getFullName());
-        $this->addDataForResource($resource, 'Telephone', $customer->getPhoneNumber());
+//        $this->addDataForResource($resource, 'Gender', $customer->getGender());
+//        $this->addDataForResource($resource, 'Full_name', $customer->getFullName());
+//        $this->addDataForResource($resource, 'Telephone', $customer->getPhoneNumber());
         $this->addDataForResource($resource, 'Email', $customer->getEmail());
     }
 
@@ -97,9 +97,16 @@ class OrderResourcePlugin extends ResourcePlugin
             return;
         }
 
-        $shippingInfoString = $this->addressConcatenation->getString($shippingAddress);
+//        $shippingInfoString = $this->addressConcatenation->getString($shippingAddress);
 
-        $this->addDataForResource($resource, 'Shipping_address', $shippingInfoString);
+        $this->addDataForResource($resource, 'Full_name', $shippingAddress->getFirstName().' '.$shippingAddress->getLastName());
+        $this->addDataForResource($resource, 'Telephone', $shippingAddress->getPhoneNumber());
+        $this->addDataForResource($resource, 'Street', $shippingAddress->getStreet());
+        $this->addDataForResource($resource, 'Postcode', $shippingAddress->getPostcode());
+        $this->addDataForResource($resource, 'City', $shippingAddress->getCity());
+//        $this->addDataForResource($resource, 'Vatnumber', $shippingAddress->getVatNumber());
+
+//        $this->addDataForResource($resource, 'Shipping_address', $shippingInfoString);
     }
 
     private function addBillingAddressData(OrderInterface $resource): void
