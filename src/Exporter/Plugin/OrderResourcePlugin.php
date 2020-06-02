@@ -143,7 +143,7 @@ class OrderResourcePlugin extends ResourcePlugin
 
             if (!isset($items[$product->getId()])) {
                 $items[$product->getId()] = [
-                    'name' => $product->getName(),
+                    'name' => $product->getCode(),
                     'count' => 0,
                 ];
             }
@@ -161,7 +161,7 @@ class OrderResourcePlugin extends ResourcePlugin
             if (!empty($str)) {
                 $str .= ' | ';
             }
-            $str .= sprintf('%dx %s(id:%d)', $item['count'], $item['name'], $itemId);
+            $str .= sprintf('%dx %s', $item['count'], $item['name']);
         }
 
         $this->addDataForResource($resource, 'Product_list', $str);
