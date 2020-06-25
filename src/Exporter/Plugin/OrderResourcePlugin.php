@@ -134,6 +134,8 @@ class OrderResourcePlugin extends ResourcePlugin
     {
         $items = [];
 
+        $items['total'] = 0;
+
         /** @var OrderItemInterface $orderItem */
         foreach ($resource->getItems() as $orderItem) {
             /** @var ProductVariantInterface $variant */
@@ -145,28 +147,34 @@ class OrderResourcePlugin extends ResourcePlugin
                 $items[$product->getId()] = [
                     'name' => $product->getCode(),
                     'count' => 0,
+                    'weight' => 0,
                 ];
             }
             $items[$product->getId()]['count'] += $orderItem->getQuantity();
+            $items[$product->getId()]['weight'] += $variant->getWeight() * $orderItem->getQuantity();
+            $items['total'] += $orderItem->getQuantity();
         }
-
         return $items;
     }
 
     private function addOrderItemData(array $items, OrderInterface $resource): void
     {
         $str = '';
-        $count = 0;
+        $total_weight = 0;
+        $total = $items['total'];
+        unset($items['total']);
+
         foreach ($items as $itemId => $item) {
             if (!empty($str)) {
                 $str .= ' | ';
             }
             $str .= sprintf('%dx %s', $item['count'], $item['name']);
-            $count++;
+            $total_weight += $item['weight'];
         }
 
         $this->addDataForResource($resource, 'Product_list', $str);
-        $this->addDataForResource($resource, 'Product_count', $count);
+        $this->addDataForResource($resource, 'Product_count', $total);
+        $this->addDataForResource($resource, 'Total_weight', $total_weight);
     }
 
     protected function findResources(array $idsToExport): array
