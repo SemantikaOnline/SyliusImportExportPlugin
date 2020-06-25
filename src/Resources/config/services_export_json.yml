@@ -13,7 +13,7 @@ services:
         class: FriendsOfSylius\SyliusImportExportPlugin\Exporter\JsonResourceExporter
         arguments:
             - "@sylius.exporter.pluginpool.orders"
-            - ["Numer", "Status", "Produkty" , "Total" ,  "Waluta", "Data", "Checkout status", "Status płatności", "Status wysyłki", "Token", "Email", "Imię i nazwisko", "Firma", "Nip", "Telefon", "Ulica", "Kod pocztowy", "Miasto", "Wysyłka imie i nazwisko", "Wysyłka firma", "Wysyłka telefon", "Wysyłka ulica", "Wysyłka kod pocztowy", "Wysyłka miasto" , "Customer_ip", "Uwagi"]
+            - ["Numer", "Status", "Produkty", "Sztuki total", "Total", "Waluta", "Data", "Checkout status", "Status płatności", "Status wysyłki", "Token", "Email", "Imię i nazwisko", "Firma", "Nip", "Telefon", "Ulica", "Kod pocztowy", "Miasto", "Wysyłka imie i nazwisko", "Wysyłka firma", "Wysyłka telefon", "Wysyłka ulica", "Wysyłka kod pocztowy", "Wysyłka miasto" , "Customer_ip", "Uwagi"]
             - "@sylius.exporters_transformer_pool"
         tags:
             - { name: sylius.exporter, type: sylius.order, format: json }
