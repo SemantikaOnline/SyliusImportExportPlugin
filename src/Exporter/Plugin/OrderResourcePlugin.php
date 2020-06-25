@@ -165,6 +165,7 @@ class OrderResourcePlugin extends ResourcePlugin
         }
 
         $this->addDataForResource($resource, 'Product_list', $str);
+        $this->addDataForResource($resource, 'Product_count', 'test');
     }
 
     protected function findResources(array $idsToExport): array
