@@ -25,7 +25,7 @@ services:
         arguments:
             - "@sylius.exporter.csv_writer"
             - "@sylius.exporter.pluginpool.orders"
-            - ["Number", "State", "Product_list" , "Total" ,  "Currency_code", "Checkout_completed_at", "Checkout_state", "Payment_state", "Shipping_state", "Token_value", "Gender", "Full_name", "Email", "Telephone", "Shipping_address", "Billing_address" , "Customer_ip", "Notes"]
+            - ["Numer", "Status", "Produkty" , "Total" ,  "Waluta", "Data", "Checkout status", "Status płatności", "Status wysyłki", "Token", "Email", "Imię i nazwisko", "Firma", "Nip", "Telefon", "Ulica", "Kod pocztowy", "Miasto", "Wysyłka imie i nazwisko", "Wysyłka firma", "Wysyłka telefon", "Wysyłka ulica", "Wysyłka kod pocztowy", "Wysyłka miasto" , "Customer_ip", "Uwagi"]
             - "@sylius.exporters_transformer_pool"
         tags:
             - { name: sylius.exporter, type: sylius.order, format: csv }
