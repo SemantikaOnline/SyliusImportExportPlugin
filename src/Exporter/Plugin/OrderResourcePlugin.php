@@ -156,16 +156,17 @@ class OrderResourcePlugin extends ResourcePlugin
     private function addOrderItemData(array $items, OrderInterface $resource): void
     {
         $str = '';
-
+        $count = 0;
         foreach ($items as $itemId => $item) {
             if (!empty($str)) {
                 $str .= ' | ';
             }
             $str .= sprintf('%dx %s', $item['count'], $item['name']);
+            $count++;
         }
 
         $this->addDataForResource($resource, 'Product_list', $str);
-        $this->addDataForResource($resource, 'Product_count', 'test');
+        $this->addDataForResource($resource, 'Product_count', $count);
     }
 
     protected function findResources(array $idsToExport): array
