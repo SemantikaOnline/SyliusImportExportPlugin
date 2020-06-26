@@ -6,8 +6,15 @@ namespace FriendsOfSylius\SyliusImportExportPlugin\Exporter\Plugin;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Component\Core\Model\ShipmentInterface;
+use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
+use Sylius\Component\Core\Model\OrderItemInterface;
+use Sylius\Component\Product\Model\ProductVariantInterface;
+use Sylius\Component\Product\Model\ProductInterface;
+
+
+
 
 class ShipmentResourcePlugin extends ResourcePlugin
 {
@@ -29,13 +36,80 @@ class ShipmentResourcePlugin extends ResourcePlugin
         /** @var ShipmentInterface $resource */
         foreach ($this->resources as $resource) {
             // insert general fields
-            $this->addGeneralData($resource);
+            $this->addShippingAdressData($resource);
+            $this->addCustomerData($resource);
+            $items = $this->getItemsAndCount($resource);
+            $this->addOrderItemData($items, $resource);
+
         }
     }
 
-    private function addGeneralData(ShipmentInterface $resource): void
+    private function addCustomerData(ShipmentInterface $resource): void
     {
-        $this->addDataForResource($resource, 'Test', 'test');
+        $customer = $resource->getOrder()->getCustomer();
+        if (null === $customer) {
+            return;
+        }
+        $this->addDataForResource($resource, 'Email', $customer->getEmail());
+    }
+
+    private function addShippingAdressData(ShipmentInterface $resource): void
+    {
+        $shippingAddress = $resource->getOrder()->getShippingAddress();
+
+        if (null === $shippingAddress) {
+            return;
+        }
+
+        $this->addDataForResource($resource, 'Shipping_full_name', $shippingAddress->getFirstName().' '.$shippingAddress->getLastName());
+        $this->addDataForResource($resource, 'Shipping_company', $shippingAddress->getCompany());
+        $this->addDataForResource($resource, 'Shipping_telephone', $shippingAddress->getPhoneNumber());
+        $this->addDataForResource($resource, 'Shipping_street', $shippingAddress->getStreet());
+        $this->addDataForResource($resource, 'Shipping_postcode', $shippingAddress->getPostcode());
+        $this->addDataForResource($resource, 'Shipping_city', $shippingAddress->getCity());
+    }
+
+    private function addOrderItemData(array $items, ShipmentInterface $resource): void
+    {
+        $str = '';
+        $total_weight = 0;
+
+        unset($items['total']);
+
+        foreach ($items as $itemId => $item) {
+            if (!empty($str)) {
+                $str .= ' | ';
+            }
+            $str .= sprintf('%dx %s', $item['count'], $item['name']);
+            $total_weight += $item['weight'];
+        }
+
+        $this->addDataForResource($resource, 'Product_list', $str);
+        $this->addDataForResource($resource, 'Weight', $total_weight);
+    }
+
+    private function getItemsAndCount(ShipmentInterface $resource): array
+    {
+        $items = [];
+
+        /** @var OrderItemInterface $orderItem */
+        foreach ($resource->getOrder()->getItems() as $orderItem) {
+            /** @var ProductVariantInterface $variant */
+            $variant = $orderItem->getVariant();
+            /** @var ProductInterface $product */
+            $product = $variant->getProduct();
+
+            if (!isset($items[$product->getId()])) {
+                $items[$product->getId()] = [
+                    'name' => $product->getCode(),
+                    'count' => 0,
+                    'weight' => 0,
+                ];
+            }
+            $items[$product->getId()]['count'] += $orderItem->getQuantity();
+            $items[$product->getId()]['weight'] += $variant->getWeight() * $orderItem->getQuantity();
+        }
+        return $items;
     }
 
 }

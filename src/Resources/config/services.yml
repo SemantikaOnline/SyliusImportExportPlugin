@@ -250,7 +250,7 @@ services:
         class: FriendsOfSylius\SyliusImportExportPlugin\Exporter\Plugin\PluginPool
         arguments:
             - ["@sylius.exporter.plugin.resource.shipments"]
-            - ["Test"]
+            - [ "Shipping_company", "Shipping_full_name", "Shipping_street", "Shipping_postcode", "Shipping_city", "Shipping_telephone", "Email", "Weight", "Product_list" ]
 
     sylius.exporter.pluginpool.tax_categories:
         class: FriendsOfSylius\SyliusImportExportPlugin\Exporter\Plugin\PluginPool
