@@ -30,6 +30,16 @@ services:
         tags:
             - { name: sylius.exporter, type: sylius.order, format: csv }
 
+    sylius.exporter.shipments.csv:
+        class: FriendsOfSylius\SyliusImportExportPlugin\Exporter\ResourceExporter
+        arguments:
+            - "@sylius.exporter.csv_writer"
+            - "@sylius.exporter.pluginpool.shipments"
+            - ["Test"]
+            - "@sylius.exporters_transformer_pool"
+        tags:
+            - { name: sylius.exporter, type: sylius.shipment, format: csv }
+
     sylius.exporter.tax_categories.csv:
         class: FriendsOfSylius\SyliusImportExportPlugin\Exporter\ResourceExporter
         arguments:
