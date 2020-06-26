@@ -60,6 +60,17 @@ services:
             - "%sylius.resources%"
         tags: ['controller.service_arguments']
 
+    sylius.controller.export_data_shipment:
+        public: true
+        class: FriendsOfSylius\SyliusImportExportPlugin\Controller\ExportDataController
+        arguments:
+            - "@sylius.exporters_registry"
+            - "@sylius.resource_controller.request_configuration_factory"
+            - "@sylius.resource_controller.resources_collection_provider"
+            - "@sylius.repository.shipment"
+            - "%sylius.resources%"
+        tags: ['controller.service_arguments']
+
     # Form Type
     sylius.form.type.import:
         public: true
@@ -186,6 +197,13 @@ services:
             - "@sylius.service.address_concatenation"
             - "@sylius.exporter.orm.hydrator.orders"
 
+    sylius.exporter.plugin.resource.shipments:
+        class: FriendsOfSylius\SyliusImportExportPlugin\Exporter\Plugin\ShipmentResourcePlugin
+        arguments:
+            - "@sylius.repository.shipment"
+            - "@property_accessor"
+            - "@doctrine.orm.entity_manager"
+
     sylius.exporter.plugin.resource.tax_categories:
         class: FriendsOfSylius\SyliusImportExportPlugin\Exporter\Plugin\ResourcePlugin
         arguments:
@@ -227,6 +245,12 @@ services:
         arguments:
             - ["@sylius.exporter.plugin.resource.orders"]
             - ["Number", "State", "Product_list", "Product_count", "Total_weight", "Total", "Currency_code", "Checkout_completed_at", "Checkout_state", "Payment_state", "Shipping_state", "Token_value", "Email", "Full_name", "Company", "Vat_number" ,"Telephone", "Street", "Postcode", "City", "Shipping_full_name", "Shipping_company", "Shipping_telephone", "Shipping_street", "Shipping_postcode", "Shipping_city", "Customer_ip", "Notes"]
+
+    sylius.exporter.pluginpool.shipments:
+        class: FriendsOfSylius\SyliusImportExportPlugin\Exporter\Plugin\PluginPool
+        arguments:
+            - ["@sylius.exporter.plugin.resource.shipments"]
+            - ["Test"]
 
     sylius.exporter.pluginpool.tax_categories:
         class: FriendsOfSylius\SyliusImportExportPlugin\Exporter\Plugin\PluginPool
