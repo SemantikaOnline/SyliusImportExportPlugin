@@ -12,9 +12,6 @@ use Sylius\Component\Core\Model\OrderItemInterface;
 use Sylius\Component\Product\Model\ProductVariantInterface;
 use Sylius\Component\Product\Model\ProductInterface;
 
-
-
-
 class ShipmentResourcePlugin extends ResourcePlugin
 {
     public function __construct(
@@ -34,7 +31,6 @@ class ShipmentResourcePlugin extends ResourcePlugin
 
         /** @var ShipmentInterface $resource */
         foreach ($this->resources as $resource) {
-            // insert general fields
             $this->addShippingAdressData($resource);
             $this->addCustomerData($resource);
             $items = $this->getItemsAndCount($resource);
@@ -61,7 +57,11 @@ class ShipmentResourcePlugin extends ResourcePlugin
         }
 
         $this->addDataForResource($resource, 'Shipping_full_name', $shippingAddress->getFirstName().' '.$shippingAddress->getLastName());
-        $this->addDataForResource($resource, 'Shipping_company', $shippingAddress->getCompany());
+        $company = $shippingAddress->getCompany();
+        if(0 == strlen($company)){
+            $company = $shippingAddress->getFirstName().' '.$shippingAddress->getLastName();
+        }
+        $this->addDataForResource($resource, 'Shipping_company', $company);
         $this->addDataForResource($resource, 'Shipping_telephone', $shippingAddress->getPhoneNumber());
         $this->addDataForResource($resource, 'Shipping_street', $shippingAddress->getStreet());
         $this->addDataForResource($resource, 'Shipping_postcode', $shippingAddress->getPostcode());
