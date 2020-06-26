@@ -58,7 +58,7 @@ class ShipmentResourcePlugin extends ResourcePlugin
 
         $this->addDataForResource($resource, 'Shipping_full_name', $shippingAddress->getFirstName().' '.$shippingAddress->getLastName());
         $company = $shippingAddress->getCompany();
-        if(0 == strlen($company)){
+        if(!$company){
             $company = $shippingAddress->getFirstName().' '.$shippingAddress->getLastName();
         }
         $this->addDataForResource($resource, 'Shipping_company', $company);
