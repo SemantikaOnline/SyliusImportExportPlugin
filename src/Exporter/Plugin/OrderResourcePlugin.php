@@ -73,6 +73,8 @@ class OrderResourcePlugin extends ResourcePlugin
         $this->addDataForResource($resource, 'Token_value', $resource->getTokenValue());
         $this->addDataForResource($resource, 'Customer_ip', $resource->getCustomerIp());
         $this->addDataForResource($resource, 'Notes', $resource->getNotes());
+        $this->addDataForResource($resource, 'Total_adjustments', $resource->getAdjustmentsTotal() / 100
+        );
     }
 
     private function addCustomerData(OrderInterface $resource): void
@@ -137,6 +139,7 @@ class OrderResourcePlugin extends ResourcePlugin
         $items['total'] = 0;
         $items['price'] = 0;
 
+
         /** @var OrderItemInterface $orderItem */
         foreach ($resource->getItems() as $orderItem) {
             /** @var ProductVariantInterface $variant */
@@ -154,7 +157,7 @@ class OrderResourcePlugin extends ResourcePlugin
             $items[$product->getId()]['count'] += $orderItem->getQuantity();
             $items[$product->getId()]['weight'] += $variant->getWeight() * $orderItem->getQuantity();
             $items['total'] += $orderItem->getQuantity();
-            $items['price'] += $orderItem->getUnitPrice() * $orderItem->getQuantity();
+            $items['price'] += $orderItem->getUnitPrice() * $orderItem->getQuantity() / 100;
         }
         return $items;
     }
