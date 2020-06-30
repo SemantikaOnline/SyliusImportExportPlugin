@@ -135,6 +135,7 @@ class OrderResourcePlugin extends ResourcePlugin
         $items = [];
 
         $items['total'] = 0;
+        $items['price'] = 0;
 
         /** @var OrderItemInterface $orderItem */
         foreach ($resource->getItems() as $orderItem) {
@@ -153,6 +154,7 @@ class OrderResourcePlugin extends ResourcePlugin
             $items[$product->getId()]['count'] += $orderItem->getQuantity();
             $items[$product->getId()]['weight'] += $variant->getWeight() * $orderItem->getQuantity();
             $items['total'] += $orderItem->getQuantity();
+            $items['price'] += $orderItem->getUnitPrice() * $orderItem->getQuantity();
         }
         return $items;
     }
@@ -162,6 +164,7 @@ class OrderResourcePlugin extends ResourcePlugin
         $str = '';
         $total_weight = 0;
         $total = $items['total'];
+        $product_price = $items['price'];
         unset($items['total']);
 
         foreach ($items as $itemId => $item) {
@@ -174,6 +177,7 @@ class OrderResourcePlugin extends ResourcePlugin
 
         $this->addDataForResource($resource, 'Product_list', $str);
         $this->addDataForResource($resource, 'Product_count', $total);
+        $this->addDataForResource($resource, 'Total_products', $product_price);
         $this->addDataForResource($resource, 'Total_weight', $total_weight);
     }
 
