@@ -73,8 +73,7 @@ class OrderResourcePlugin extends ResourcePlugin
         $this->addDataForResource($resource, 'Token_value', $resource->getTokenValue());
         $this->addDataForResource($resource, 'Customer_ip', $resource->getCustomerIp());
         $this->addDataForResource($resource, 'Notes', $resource->getNotes());
-        $this->addDataForResource($resource, 'Total_adjustments', $resource->getAdjustmentsTotal() / 100
-        );
+        $this->addDataForResource($resource, 'Total_adjustments', $resource->getAdjustmentsTotal() / 100);
     }
 
     private function addCustomerData(OrderInterface $resource): void

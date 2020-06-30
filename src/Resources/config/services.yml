@@ -244,7 +244,7 @@ services:
         class: FriendsOfSylius\SyliusImportExportPlugin\Exporter\Plugin\PluginPool
         arguments:
             - ["@sylius.exporter.plugin.resource.orders"]
-            - ["Number", "State", "Product_list", "Product_count", "Total_weight", "Total", "Total_products", "Totaj_adjustments", "Currency_code", "Checkout_completed_at", "Checkout_state", "Payment_state", "Shipping_state", "Token_value", "Email", "Full_name", "Company", "Vat_number" ,"Telephone", "Street", "Postcode", "City", "Shipping_full_name", "Shipping_company", "Shipping_telephone", "Shipping_street", "Shipping_postcode", "Shipping_city", "Customer_ip", "Notes"]
+            - ["Number", "State", "Product_list", "Product_count", "Total_weight", "Total", "Total_products", "Total_adjustments", "Currency_code", "Checkout_completed_at", "Checkout_state", "Payment_state", "Shipping_state", "Token_value", "Email", "Full_name", "Company", "Vat_number" ,"Telephone", "Street", "Postcode", "City", "Shipping_full_name", "Shipping_company", "Shipping_telephone", "Shipping_street", "Shipping_postcode", "Shipping_city", "Customer_ip", "Notes"]
 
     sylius.exporter.pluginpool.shipments:
         class: FriendsOfSylius\SyliusImportExportPlugin\Exporter\Plugin\PluginPool
