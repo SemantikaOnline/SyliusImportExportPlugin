@@ -35,7 +35,7 @@ services:
         arguments:
             - "@sylius.exporter.csv_writer"
             - "@sylius.exporter.pluginpool.shipments"
-            - ["Odbiorca", "Imię i Nazwisko", "Telefon", "Email", "Ulica", "Miasto", "Kod pocztowy", "Kraj", "Liczba paczek", "Waga paczki", "Pobranie", "Ubezpieczenie", "Uwagi", "Referencja"]
+            - ["Odbiorca", "Imię i Nazwisko", "Telefon", "Email", "Adres", "Miasto", "Kod pocztowy", "Kraj", "Liczba paczek", "Waga paczki", "Pobranie", "Ubezpieczenie", "Uwagi", "Referencja"]
             - "@sylius.exporters_transformer_pool"
         tags:
             - { name: sylius.exporter, type: sylius.shipment, format: csv }
