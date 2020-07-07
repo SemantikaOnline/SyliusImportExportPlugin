@@ -66,6 +66,12 @@ class ShipmentResourcePlugin extends ResourcePlugin
         $this->addDataForResource($resource, 'Shipping_street', $shippingAddress->getStreet());
         $this->addDataForResource($resource, 'Shipping_postcode', $shippingAddress->getPostcode());
         $this->addDataForResource($resource, 'Shipping_city', $shippingAddress->getCity());
+        $this->addDataForResource($resource, 'Shipping_country', 'PL');
+        $this->addDataForResource($resource, 'Shipping_packages', '1');
+        $this->addDataForResource($resource, 'Shipping_package_price', '0');
+        $this->addDataForResource($resource, 'Shipping_insurance', '0');
+        $this->addDataForResource($resource, 'Shipping_reference', '');
+
     }
 
     private function addOrderItemData(array $items, ShipmentInterface $resource): void
