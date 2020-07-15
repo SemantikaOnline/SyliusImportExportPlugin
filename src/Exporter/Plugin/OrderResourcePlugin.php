@@ -173,8 +173,10 @@ class OrderResourcePlugin extends ResourcePlugin
             if (!empty($str)) {
                 $str .= ' | ';
             }
-            $str .= sprintf('%dx %s', $item['count'], $item['name']);
-            $total_weight += $item['weight'];
+            if($itemId != 'price') {
+                $str .= sprintf('%dx %s', $item['count'], $item['name']);
+                $total_weight += $item['weight'];
+            }
         }
 
         $this->addDataForResource($resource, 'Product_list', $str);
