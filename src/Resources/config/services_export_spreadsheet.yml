@@ -22,7 +22,7 @@ services:
         class: FriendsOfSylius\SyliusImportExportPlugin\Exporter\ResourceExporter
         arguments:
             - "@sylius.exporter.spreadsheet_writer"
-            - "@sylius.exporter.pluginpool.shipments"
+            - "@sylius.exporter.pluginpool.shipments_inpost"
             - ["Odbiorca", "Imię i Nazwisko", "Telefon", "Email", "Adres*", "Miasto*", "Kod pocztowy*", "Kraj", "Liczba paczek*", "Waga paczki*", "Pobranie", "Ubezpieczenie", "Uwagi", "Referencja"]
             - "@sylius.exporters_transformer_pool"
         tags:
