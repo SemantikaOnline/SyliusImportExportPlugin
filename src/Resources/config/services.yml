@@ -1,4 +1,5 @@
 services:
+
     # Parameter Bag
     sylius.parameter_bag:
         class: FriendsOfSylius\SyliusImportExportPlugin\DependencyInjection\ParameterBag\ParameterBag
@@ -68,6 +69,18 @@ services:
             - "@sylius.resource_controller.request_configuration_factory"
             - "@sylius.resource_controller.resources_collection_provider"
             - "@sylius.repository.shipment"
+            - "%sylius.resources%"
+        tags: ['controller.service_arguments']
+
+
+    sylius.controller.export_data_payment:
+        public: true
+        class: FriendsOfSylius\SyliusImportExportPlugin\Controller\ExportDataController
+        arguments:
+            - "@sylius.exporters_registry"
+            - "@sylius.resource_controller.request_configuration_factory"
+            - "@sylius.resource_controller.resources_collection_provider"
+            - "@sylius.repository.payment"
             - "%sylius.resources%"
         tags: ['controller.service_arguments']
 
@@ -204,6 +217,13 @@ services:
             - "@property_accessor"
             - "@doctrine.orm.entity_manager"
 
+    sylius.exporter.plugin.resource.payments:
+        class: FriendsOfSylius\SyliusImportExportPlugin\Exporter\Plugin\PaymentResourcePlugin
+        arguments:
+            - "@sylius.repository.payment"
+            - "@property_accessor"
+            - "@doctrine.orm.entity_manager"
+
     sylius.exporter.plugin.resource.tax_categories:
         class: FriendsOfSylius\SyliusImportExportPlugin\Exporter\Plugin\ResourcePlugin
         arguments:
@@ -246,6 +266,13 @@ services:
             - ["@sylius.exporter.plugin.resource.orders"]
             - ["Number", "State", "Product_list", "Product_count", "Total_weight", "Total", "Total_products", "Total_adjustments", "Currency_code", "Checkout_completed_at", "Checkout_state", "Payment_state", "Shipping_state", "Token_value", "Email", "Full_name", "Company", "Vat_number" ,"Telephone", "Street", "Postcode", "City", "Shipping_full_name", "Shipping_company", "Shipping_telephone", "Shipping_street", "Shipping_postcode", "Shipping_city", "Customer_ip", "Notes"]
 
+
+    sylius.exporter.pluginpool.payments:
+        class: FriendsOfSylius\SyliusImportExportPlugin\Exporter\Plugin\PluginPool
+        arguments:
+            - ["@sylius.exporter.plugin.resource.payments"]
+            - ["Order_number", "Order_email", "Payment_date"]
+
     sylius.exporter.pluginpool.shipments:
         class: FriendsOfSylius\SyliusImportExportPlugin\Exporter\Plugin\PluginPool
         arguments:
@@ -257,7 +284,6 @@ services:
         arguments:
             - ["@sylius.exporter.plugin.resource.shipments"]
             - [ "Shipping_company", "Shipping_full_name", "Shipping_telephone", "Email", "Shipping_street", "Shipping_city", "Shipping_postcode", "Shipping_country", "Shipping_packages", "Weight", "Shipping_cash", "Shipping_insurance", "Product_list", "Shipping_reference" ]
-
 
     sylius.exporter.pluginpool.tax_categories:
         class: FriendsOfSylius\SyliusImportExportPlugin\Exporter\Plugin\PluginPool
