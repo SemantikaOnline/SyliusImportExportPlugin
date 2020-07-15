@@ -252,6 +252,13 @@ services:
             - ["@sylius.exporter.plugin.resource.shipments"]
             - [ "Shipping_company", "Shipping_full_name", "Shipping_street", "Shipping_postcode", "Shipping_city", "Shipping_telephone", "Email", "Weight", "Product_list" ]
 
+    sylius.exporter.pluginpool.shipments_inpost:
+        class: FriendsOfSylius\SyliusImportExportPlugin\Exporter\Plugin\PluginPool
+        arguments:
+            - ["@sylius.exporter.plugin.resource.shipments"]
+            - [ "Shipping_company", "Shipping_full_name", "Shipping_telephone", "Email", "Shipping_street", "Shipping_city", "Shipping_postcode", "Shipping_country", "Shipping_packages", "Weight", "Shipping_cash", "Shipping_insurance", "Product_list", "Shipping_reference" ]
+
+
     sylius.exporter.pluginpool.tax_categories:
         class: FriendsOfSylius\SyliusImportExportPlugin\Exporter\Plugin\PluginPool
         arguments:
