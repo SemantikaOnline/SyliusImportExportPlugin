@@ -31,12 +31,22 @@ class ShipmentResourcePlugin extends ResourcePlugin
 
         /** @var ShipmentInterface $resource */
         foreach ($this->resources as $resource) {
+            $this->addGeneralData($resource);
             $this->addShippingAdressData($resource);
             $this->addCustomerData($resource);
             $items = $this->getItemsAndCount($resource);
             $this->addOrderItemData($items, $resource);
 
         }
+    }
+
+    private function addGeneralData(ShipmentInterface $resource): void
+    {
+        $this->addDataForResource($resource, 'Shipping_country', 'PL');
+        $this->addDataForResource($resource, 'Shipping_packages', '1');
+        $this->addDataForResource($resource, 'Shipping_cash', '0');
+        $this->addDataForResource($resource, 'Shipping_insurance', '0');
+        $this->addDataForResource($resource, 'Shipping_reference', '');
     }
 
     private function addCustomerData(ShipmentInterface $resource): void
