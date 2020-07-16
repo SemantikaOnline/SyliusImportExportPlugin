@@ -36,11 +36,15 @@ class PaymentResourcePlugin extends ResourcePlugin
     private function addGeneralData(PaymentInterface $resource): void
     {
         $this->addDataForResource($resource, 'Payment_date', $resource->getUpdatedAt());
+
     }
 
     private function addOrderData(PaymentInterface $resource): void
     {
-        $this->addDataForResource($resource, 'Order_number', $resource->getOrder()->getNumber());
-        $this->addDataForResource($resource, 'Order_email', $resource->getOrder()->getCustomer()->getEmail());
+        $order = $resource->getOrder();
+        $this->addDataForResource($resource, 'Order_number', $order->getNumber());
+        $this->addDataForResource($resource, 'Order_email', $order->getCustomer()->getEmail());
+        $this->addDataForResource($resource, 'Items_total', $order->getItemsTotal() / 100);
+        $this->addDataForResource($resource, 'Adjustments_total', $order->getAdjustmentsTotal() / 100);
     }
 }

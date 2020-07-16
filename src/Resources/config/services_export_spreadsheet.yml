@@ -33,7 +33,7 @@ services:
         arguments:
             - "@sylius.exporter.spreadsheet_writer"
             - "@sylius.exporter.pluginpool.payments"
-            - ["Numer zamówienia", "Email", "Data płatności"]
+            - ["Numer zamówienia", "Email", "Data płatności", "Items total", "Wysyłka"]
             - "@sylius.exporters_transformer_pool"
         tags:
             - { name: sylius.exporter, type: sylius.payment, format: xlsx }

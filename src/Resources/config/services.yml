@@ -271,7 +271,7 @@ services:
         class: FriendsOfSylius\SyliusImportExportPlugin\Exporter\Plugin\PluginPool
         arguments:
             - ["@sylius.exporter.plugin.resource.payments"]
-            - ["Order_number", "Order_email", "Payment_date"]
+            - ["Order_number", "Order_email", "Payment_date", "Items_total", "Adjusments_total"]
 
     sylius.exporter.pluginpool.shipments:
         class: FriendsOfSylius\SyliusImportExportPlugin\Exporter\Plugin\PluginPool
