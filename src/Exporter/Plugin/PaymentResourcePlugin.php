@@ -43,7 +43,8 @@ class PaymentResourcePlugin extends ResourcePlugin
     private function addGeneralData(PaymentInterface $resource): void
     {
         $this->addDataForResource($resource, 'Payment_date', $resource->getPaidAt());
-
+        $this->addDataForResource($resource, 'Ext_transaction_number', $resource->getExtTransactionNumber());
+        $this->addDataForResource($resource, 'Ext_invoice_number', $resource->getExtInvoiceNumber());
     }
 
     private function addOrderData(PaymentInterface $resource): void
