@@ -56,6 +56,7 @@ class PaymentResourcePlugin extends ResourcePlugin
         $this->addDataForResource($resource, 'Adjustments_total', $order->getAdjustmentsTotal() / 100);
         $this->addDataForResource($resource, 'Order_total', $order->getTotal() / 100);
         $this->addDataForResource($resource, 'Vat_number', $order->getBillingAddress()->getVatNumber());
+        $this->addDataForResource($resource, 'Notes', $order->getNotes());
 
 
     }
